@@ -5,7 +5,7 @@ title: MSGraphPermissions
 
 ## 🚀 Installation
 
-`powershell
+```powershell
 Install-Module MSGraphPermissions -Scope CurrentUser
 
 Import-Module MSGraphPermissions
