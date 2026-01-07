@@ -832,9 +832,10 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             margin: 2rem 0;
             position: relative;
+            box-shadow: 0 6px 20px var(--shadow);
         }
 
         .example-section::before {
@@ -848,18 +849,93 @@
             border-radius: 12px 12px 0 0;
         }
 
+        .example-section h3 {
+            margin-bottom: 1.5rem;
+            border: none;
+            padding: 0;
+        }
+
         .example-number {
             display: inline-block;
             background: var(--accent);
             color: white;
-            width: 32px;
-            height: 32px;
-            line-height: 32px;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
             text-align: center;
             border-radius: 50%;
             font-weight: 700;
-            margin-right: 0.5rem;
+            margin-right: 0.75rem;
             box-shadow: 0 4px 10px var(--accent-glow);
+        }
+
+        .example-code {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            position: relative;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            box-shadow: inset 0 2px 4px var(--shadow);
+        }
+
+        .example-code::before {
+            content: 'PowerShell';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+
+        .example-code code {
+            color: var(--text-primary);
+            display: block;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .example-output {
+            background: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            position: relative;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .example-output::before {
+            content: '✓ Output';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--neon-cyan);
+            color: var(--bg-primary);
+            padding: 0.2rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+        }
+
+        .example-description {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid var(--border-color);
         }
 
         .note-box {
@@ -1098,10 +1174,63 @@
                     h3.parentNode.insertBefore(exampleSection, h3);
                     exampleSection.appendChild(h3);
                     
+                    // Collect all content for this example
                     let next = h3.nextElementSibling;
+                    let isFirstP = true;
                     while (next && next.tagName !== 'H3' && next.tagName !== 'H2') {
                         const current = next;
                         next = next.nextElementSibling;
+                        
+                        // First paragraph is usually the command - wrap it as code
+                        if (isFirstP && current.tagName === 'P' && !current.querySelector('table')) {
+                            const commandText = current.textContent.trim();
+                            // Check if it looks like a PowerShell command
+                            if (commandText.includes('Find-Graph') || commandText.includes('$') || commandText.includes('|')) {
+                                const codeBlock = document.createElement('div');
+                                codeBlock.className = 'example-code';
+                                codeBlock.innerHTML = `<code>${commandText}</code>`;
+                                exampleSection.appendChild(codeBlock);
+                                isFirstP = false;
+                                continue;
+                            }
+                        }
+                        
+                        // Check if this is description text (before output)
+                        if (current.tagName === 'P' && !current.textContent.trim().startsWith('Output:') && 
+                            !current.textContent.includes('Path') && !current.textContent.includes('Method')) {
+                            current.classList.add('example-description');
+                        }
+                        
+                        // Handle output section
+                        if (current.tagName === 'P' && current.textContent.trim().startsWith('Output:')) {
+                            const outputLabel = document.createElement('div');
+                            outputLabel.style.fontWeight = '700';
+                            outputLabel.style.color = 'var(--accent)';
+                            outputLabel.style.marginTop = '1.5rem';
+                            outputLabel.style.marginBottom = '0.5rem';
+                            outputLabel.textContent = 'Expected Output:';
+                            exampleSection.appendChild(outputLabel);
+                            
+                            // Look for the next paragraph which should contain the actual output
+                            if (next && next.tagName === 'P') {
+                                const outputBlock = document.createElement('div');
+                                outputBlock.className = 'example-output';
+                                outputBlock.innerHTML = `<pre>${next.textContent.trim()}</pre>`;
+                                exampleSection.appendChild(outputBlock);
+                                next = next.nextElementSibling;
+                            }
+                            continue;
+                        }
+                        
+                        // Handle table outputs (if any)
+                        if (current.tagName === 'TABLE') {
+                            const outputBlock = document.createElement('div');
+                            outputBlock.className = 'example-output';
+                            outputBlock.appendChild(current.cloneNode(true));
+                            exampleSection.appendChild(outputBlock);
+                            continue;
+                        }
+                        
                         exampleSection.appendChild(current);
                     }
                 }
