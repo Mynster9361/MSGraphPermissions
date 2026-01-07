@@ -1,0 +1,18 @@
+title: MSGraphPermissions
+description: PowerShell module for finding least privileged Microsoft Graph API permissions
+theme: jekyll-theme-cayman
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+exclude:
+  - MSGraphPermissions/
+  - build/
+  - tests/
+  - TestResults/
+  - .github/
+  - "*.ps1"
+  - "*.psd1"
+  - "*.psm1"

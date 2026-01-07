@@ -1,0 +1,36 @@
+﻿on: [pull_request]
+
+jobs:
+  validate:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Prerequisites
+      run: .\build\vsts-prerequisites.ps1
+      shell: powershell
+    - name: Build Documentation
+      run: .\build\Build-Documentation.ps1 -UpdateMarkdown
+      shell: powershell
+    - name: Commit Documentation Changes
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+        $changes = git status --porcelain docs/
+        if ($changes) {
+          git add docs/
+          git commit -m "chore: auto-update documentation [skip ci]"
+          git push
+          "Documentation updated and committed!"
+        } else {
+          "Documentation is already up to date."
+        }
+      shell: powershell
+    - name: Validate
+      run: .\build\vsts-validate.ps1
+      shell: powershell
