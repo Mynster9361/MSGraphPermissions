@@ -975,6 +975,20 @@
             box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
         }
 
+        .example-output pre {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .example-output pre::before {
+            display: none;
+        }
+
         .example-description {
             color: var(--text-secondary);
             margin: 1rem 0;
