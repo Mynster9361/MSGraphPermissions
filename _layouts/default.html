@@ -180,9 +180,121 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-primary);
+            color: var(--accent);
+            text-decoration: none;
+            transform: translateX(5px);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 10px var(--accent-glow);
+        }
+
+        .nav-link.active::before {
+            transform: scaleY(1);
+            background: white;
+        }
+
+        .nav-icon {
+            margin-right: 0.5rem;
+            font-size: 1.1em;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px var(--accent-glow);
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .content {
@@ -503,6 +615,31 @@
 
             .container {
                 padding: 1rem;
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                max-height: 100vh;
+                z-index: 999;
+                transition: left 0.3s ease;
+                padding: 1rem;
+                background: var(--bg-primary);
+            }
+
+            .sidebar.active {
+                left: 0;
+                box-shadow: 4px 0 20px var(--shadow);
+            }
+
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .content {
@@ -562,6 +699,216 @@
             0% { background-position: 0% center; }
             100% { background-position: 200% center; }
         }
+
+        /* Command Documentation Styles */
+        .content h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            margin-top: 3rem;
+            padding: 1rem 0 1rem 1rem;
+            border-left: 4px solid var(--accent);
+            background: linear-gradient(90deg, var(--bg-primary) 0%, transparent 100%);
+        }
+
+        .content h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--neon-cyan);
+        }
+
+        .syntax-block {
+            background: var(--code-bg);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px var(--shadow),
+                        0 0 20px var(--accent-glow);
+        }
+
+        .syntax-block::before {
+            content: 'SYNTAX';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .param-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .param-card:hover {
+            border-left-color: var(--neon-cyan);
+            box-shadow: 0 6px 20px var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .param-card h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            padding: 0;
+        }
+
+        .param-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .param-badge.required {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .param-badge.optional {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .param-badge.pipeline {
+            background: linear-gradient(135deg, var(--accent), var(--neon-purple));
+            color: white;
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+
+        .param-details {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .param-details dt {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .param-details dd {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .example-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .example-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--neon-cyan), var(--neon-purple));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .example-number {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            box-shadow: 0 4px 10px var(--accent-glow);
+        }
+
+        .note-box {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .note-box::before {
+            content: '💡 NOTE';
+            display: block;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .output-box {
+            background: var(--code-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .output-box::before {
+            content: '📤 OUTPUT';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 2px solid var(--border-color);
+        }
+
+        .section-icon {
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -574,9 +921,46 @@
     </header>
 
     <div class="container">
-        <main class="content">
-            {{ content }}
-        </main>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-title">Navigation</div>
+                <a href="{{ site.baseurl }}/" class="nav-link">
+                    <span class="nav-icon">🏠</span>Home
+                </a>
+                
+                <div class="sidebar-title" style="margin-top: 1.5rem;">Commands</div>
+                <a href="{{ site.baseurl }}/docs/MSGraphPermissions/Find-GraphLeastPrivilege.html" class="nav-link">
+                    <span class="nav-icon">🔍</span>Find-GraphLeastPrivilege
+                </a>
+                <a href="{{ site.baseurl }}/docs/MSGraphPermissions/Find-GraphPath.html" class="nav-link">
+                    <span class="nav-icon">🔎</span>Find-GraphPath
+                </a>
+                <a href="{{ site.baseurl }}/docs/MSGraphPermissions/Get-GraphPermissions.html" class="nav-link">
+                    <span class="nav-icon">📋</span>Get-GraphPermissions
+                </a>
+                <a href="{{ site.baseurl }}/docs/MSGraphPermissions/Initialize-GraphPermissions.html" class="nav-link">
+                    <span class="nav-icon">⚙️</span>Initialize-GraphPermissions
+                </a>
+
+                <div class="sidebar-title" style="margin-top: 1.5rem;">Resources</div>
+                <a href="https://github.com/Mynster9361/MSGraphPermissions" class="nav-link" target="_blank">
+                    <span class="nav-icon">📦</span>GitHub
+                </a>
+                <a href="https://www.powershellgallery.com/packages/MSGraphPermissions" class="nav-link" target="_blank">
+                    <span class="nav-icon">💎</span>PowerShell Gallery
+                </a>
+            </div>
+        </aside>
+
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">
+            ☰
+        </button>
+
+        <div class="main-content">
+            <main class="content">
+                {{ content }}
+            </main>
+        </div>
     </div>
 
     <footer class="footer">
@@ -615,10 +999,114 @@
             }
         }
 
+        // Sidebar toggle for mobile
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !sidebarToggle.contains(e.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Highlight active nav link
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            const linkPath = new URL(link.href).pathname;
+            if (currentPath === linkPath || (currentPath === '/' && linkPath.endsWith('/'))) {
+                link.classList.add('active');
+            }
+        });
+
         // Add smooth reveal animation
         window.addEventListener('load', () => {
-            document.querySelector('.content').style.animation = 'fadeIn 0.5s ease-in';
+            const content = document.querySelector('.content');
+            if (content) {
+                content.style.animation = 'fadeIn 0.5s ease-in';
+            }
         });
+
+        // Enhance command documentation layout
+        if (document.querySelector('.content h1')) {
+            // Wrap syntax blocks
+            document.querySelectorAll('.content h2').forEach(h2 => {
+                if (h2.textContent.trim().toUpperCase() === 'SYNTAX') {
+                    const nextElement = h2.nextElementSibling;
+                    if (nextElement && nextElement.tagName === 'H3') {
+                        const syntaxContent = nextElement.nextElementSibling;
+                        if (syntaxContent && syntaxContent.classList.contains('highlighter-rouge')) {
+                            syntaxContent.classList.add('syntax-block');
+                        }
+                    }
+                }
+
+                // Add icons to sections
+                const text = h2.textContent.trim().toUpperCase();
+                const icons = {
+                    'SYNOPSIS': '📝',
+                    'SYNTAX': '⚙️',
+                    'DESCRIPTION': '📖',
+                    'EXAMPLES': '💡',
+                    'PARAMETERS': '🎯',
+                    'INPUTS': '📥',
+                    'OUTPUTS': '📤',
+                    'NOTES': '📌',
+                    'RELATED LINKS': '🔗'
+                };
+                if (icons[text]) {
+                    h2.innerHTML = `<span class="section-icon">${icons[text]}</span>${h2.textContent}`;
+                }
+            });
+
+            // Wrap parameter sections in cards
+            document.querySelectorAll('.content h3').forEach(h3 => {
+                if (h3.textContent.startsWith('-')) {
+                    const paramCard = document.createElement('div');
+                    paramCard.className = 'param-card';
+                    
+                    h3.parentNode.insertBefore(paramCard, h3);
+                    paramCard.appendChild(h3);
+                    
+                    // Move description and YAML details into card
+                    let next = h3.nextElementSibling;
+                    while (next && next.tagName !== 'H3' && next.tagName !== 'H2') {
+                        const current = next;
+                        next = next.nextElementSibling;
+                        paramCard.appendChild(current);
+                    }
+                }
+            });
+
+            // Enhance example sections
+            document.querySelectorAll('.content h3').forEach((h3, index) => {
+                if (h3.textContent.match(/EXAMPLE \d+/)) {
+                    const exampleSection = document.createElement('div');
+                    exampleSection.className = 'example-section';
+                    
+                    const exampleNum = h3.textContent.match(/\d+/)[0];
+                    h3.innerHTML = `<span class="example-number">${exampleNum}</span>${h3.textContent.replace(/EXAMPLE \d+/, 'Example')}`;
+                    
+                    h3.parentNode.insertBefore(exampleSection, h3);
+                    exampleSection.appendChild(h3);
+                    
+                    let next = h3.nextElementSibling;
+                    while (next && next.tagName !== 'H3' && next.tagName !== 'H2') {
+                        const current = next;
+                        next = next.nextElementSibling;
+                        exampleSection.appendChild(current);
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
