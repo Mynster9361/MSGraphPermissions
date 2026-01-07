@@ -1,20 +1,22 @@
 ---
 layout: default
-title: Home
+title: MSGraphPermissions
 ---
 
-# MSGraphPermissions
+## 🚀 Installation
 
-A PowerShell module for finding least privileged Microsoft Graph API permissions.
-
-## Installation
+<div class="install-box">
 
 ```powershell
 Install-Module MSGraphPermissions -Scope CurrentUser
 Import-Module MSGraphPermissions
 ```
 
-## Quick Start
+</div>
+
+## ⚡ Quick Start
+
+Get up and running in seconds:
 
 ```powershell
 # Initialize (downloads latest permissions)
@@ -24,15 +26,46 @@ Initialize-GraphPermissions
 Find-GraphLeastPrivilege -Path "/users/{id}" -Method GET -Scheme DelegatedWork
 ```
 
-## Commands
+## 📚 Commands
 
-- [Find-GraphLeastPrivilege](docs/MSGraphPermissions/Find-GraphLeastPrivilege.html) - Find least privileged permissions for an endpoint
-- [Find-GraphPath](docs/MSGraphPermissions/Find-GraphPath.html) - Search for Graph API paths
-- [Get-GraphPermissions](docs/MSGraphPermissions/Get-GraphPermissions.html) - Get all permissions for an endpoint
-- [Initialize-GraphPermissions](docs/MSGraphPermissions/Initialize-GraphPermissions.html) - Download latest permissions data
+<div class="command-card">
+  <a href="docs/MSGraphPermissions/Find-GraphLeastPrivilege.html">Find-GraphLeastPrivilege</a>
+  <p>Find least privileged permissions for a Microsoft Graph API endpoint</p>
+</div>
 
-## Links
+<div class="command-card">
+  <a href="docs/MSGraphPermissions/Find-GraphPath.html">Find-GraphPath</a>
+  <p>Search for Microsoft Graph API paths and endpoints</p>
+</div>
 
-- [GitHub Repository](https://github.com/microsoftgraph/kibali-powershell)
-- [PowerShell Gallery](https://www.powershellgallery.com/packages/MSGraphPermissions)
-- [Full Documentation](docs/MSGraphPermissions/MSGraphPermissions.html)
+<div class="command-card">
+  <a href="docs/MSGraphPermissions/Get-GraphPermissions.html">Get-GraphPermissions</a>
+  <p>Get all available permissions for a specific endpoint</p>
+</div>
+
+<div class="command-card">
+  <a href="docs/MSGraphPermissions/Initialize-GraphPermissions.html">Initialize-GraphPermissions</a>
+  <p>Download and initialize the latest permissions data from Microsoft</p>
+</div>
+
+## 🔗 Resources
+
+<div class="links-grid">
+  <div class="link-card">
+    <a href="https://github.com/Mynster9361/MSGraphPermissions">📦 GitHub Repository</a>
+  </div>
+  <div class="link-card">
+    <a href="https://www.powershellgallery.com/packages/MSGraphPermissions">💎 PowerShell Gallery</a>
+  </div>
+  <div class="link-card">
+    <a href="docs/MSGraphPermissions/MSGraphPermissions.html">📖 Full Documentation</a>
+  </div>
+</div>
+
+## 💡 Features
+
+- **Least Privilege**: Find the minimum required permissions for any Graph API endpoint
+- **Always Current**: Downloads the latest permission data directly from Microsoft
+- **Multiple Schemes**: Support for Delegated Work, Delegated Personal, and Application permissions
+- **Easy Search**: Quickly search and discover Graph API paths
+- **PowerShell Native**: Built for PowerShell users with intuitive cmdlets
