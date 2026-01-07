@@ -105,6 +105,8 @@
         - The permissions cache is automatically initialized on first use by calling
           Initialize-GraphPermissions
         - To refresh the permissions data, run: Initialize-GraphPermissions -Force
+    .LINK
+        https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Find-GraphLeastPrivilege.html
     #>
     [CmdletBinding()]
     param(

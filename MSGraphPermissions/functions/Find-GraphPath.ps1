@@ -100,6 +100,8 @@
           return hundreds of paths (e.g., "/me/*" returns 1000+ paths)
         - The Methods property shows all available HTTP methods; use Find-GraphLeastPrivilege
           to determine required permissions for specific methods
+    .LINK
+        https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Find-GraphPath.html
     #>
     [CmdletBinding()]
     param(

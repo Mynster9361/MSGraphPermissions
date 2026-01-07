@@ -25,7 +25,7 @@ Copyright = '(c) Morten Mynster. All rights reserved.'
 Description = 'This module is made to supply the least privilegede permission available to specific endpoints, you are also able to get a general overview of permissions for a certain endpoint with a given method, further you are able to search for patterns in urls in order to get/find diffrent paths'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '7.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -95,16 +95,16 @@ PrivateData = @{
         Tags = @('MicrosoftGraph', 'GraphAPI', 'Permissions', 'Security', 'Kibali')
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/yourusername/MSGraphPermissions/blob/main/LICENSE'
+        LicenseUri = 'https://github.com/mynster9361/MSGraphPermissions/blob/main/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/yourusername/MSGraphPermissions'
+        ProjectUri = 'https://mynster9361.github.io/MSGraphPermissions/'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/yourusername/MSGraphPermissions/blob/main/CHANGELOG.md'
+        # ReleaseNotes = 'https://github.com/mynster9361/MSGraphPermissions/blob/main/CHANGELOG.md'
 
         # Prerelease string of this module
         # Prerelease = ''

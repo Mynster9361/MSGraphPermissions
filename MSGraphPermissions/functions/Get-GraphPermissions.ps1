@@ -122,6 +122,8 @@
         - To refresh the permissions data, run: Initialize-GraphPermissions -Force
         - The AlsoRequires property indicates permission dependencies; most permissions
           don't have dependencies and will show an empty string
+    .LINK
+        https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Get-GraphPermissions.html
     #>
     [CmdletBinding()]
     param(

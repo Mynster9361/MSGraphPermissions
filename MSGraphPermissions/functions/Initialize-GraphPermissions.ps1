@@ -60,6 +60,8 @@
         - The permissions file is typically several MB in size
         - First download may take a few seconds depending on connection speed
         - Cached lookups are instantaneous after initialization
+    .LINK
+        https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Initialize-GraphPermissions.html
     #>
     [CmdletBinding()]
     param(
