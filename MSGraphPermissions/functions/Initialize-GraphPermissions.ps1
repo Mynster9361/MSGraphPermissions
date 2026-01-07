@@ -24,22 +24,28 @@
         Without this switch, the function will use existing cached data if available.
 
     .EXAMPLE
+        ```
         Initialize-GraphPermissions
         
         Downloads permissions data if not already cached. If data is already in memory,
         does nothing and returns immediately.
+        ```
 
     .EXAMPLE
+        ```
         Initialize-GraphPermissions -Force
         
         Forces a fresh download of the latest permissions data, replacing any existing cache.
         Use this when you need to ensure you have the most recent permissions metadata.
+        ```
 
     .EXAMPLE
+        ```
         Initialize-GraphPermissions -Force -Verbose
         
         Forces a refresh and shows detailed progress information about the download
         and indexing process.
+        ```
 
     .OUTPUTS
         None

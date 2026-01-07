@@ -47,25 +47,31 @@ typically don't need to call it explicitly unless you want to force a refresh.
 
 ### EXAMPLE 1
 
+```
 Initialize-GraphPermissions
 
 Downloads permissions data if not already cached.
 If data is already in memory,
 does nothing and returns immediately.
+```
 
 ### EXAMPLE 2
 
+```
 Initialize-GraphPermissions -Force
 
 Forces a fresh download of the latest permissions data, replacing any existing cache.
 Use this when you need to ensure you have the most recent permissions metadata.
+```
 
 ### EXAMPLE 3
 
+```
 Initialize-GraphPermissions -Force -Verbose
 
 Forces a refresh and shows detailed progress information about the download
 and indexing process.
+```
 
 ## PARAMETERS
 

@@ -5,14 +5,12 @@ title: MSGraphPermissions
 
 ## 🚀 Installation
 
-<div class="install-box">
-
-```powershell
+`powershell
 Install-Module MSGraphPermissions -Scope CurrentUser
+
 Import-Module MSGraphPermissions
 ```
 
-</div>
 
 ## ⚡ Quick Start
 

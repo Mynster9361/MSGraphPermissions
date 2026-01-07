@@ -39,6 +39,7 @@
         If not specified, returns permissions for all available schemes.
 
     .EXAMPLE
+        ```
         Get-GraphPermissions -Path "/users/{id}" -Method GET
         
         Returns all permissions (least privileged and higher) that can be used to read
@@ -50,8 +51,10 @@
         /users/{id} GET    Application User.Read.All        False
         /users/{id} GET    Application User.ReadBasic.All   True
         /users/{id} GET    Application Directory.Read.All   False
+        ```
 
     .EXAMPLE
+        ```
         Get-GraphPermissions -Path "/me/messages" -Method GET -Scheme DelegatedWork
         
         Returns all delegated work permissions that can read the current user's messages,
@@ -63,34 +66,43 @@
         /me/messages GET    DelegatedWork Mail.ReadBasic  True
         /me/messages GET    DelegatedWork Mail.Read       False
         /me/messages GET    DelegatedWork Mail.ReadWrite  False
+        ```
 
     .EXAMPLE
+        ```
         Get-GraphPermissions -Path "/users/{id}/messages" -Method GET |
             Where-Object { $_.IsLeastPrivileged } |
             Format-Table Permission, Scheme
         
         Gets all permissions for reading user messages, then filters to show only
         the least privileged options across all schemes.
+        ```
 
     .EXAMPLE
+        ```
         Get-GraphPermissions -Path "/me/calendar/events" -Method POST -Scheme Application |
             Select-Object Permission, IsLeastPrivileged, AlsoRequires
         
         Shows all application permissions that can create calendar events, including
         any additional permissions required (AlsoRequires column).
+        ```
 
     .EXAMPLE
+        ```
         "/me/messages", "/me/calendar" | Get-GraphPermissions -Method GET |
             Group-Object Permission | Sort-Object Count -Descending
         
         Compares permissions across multiple endpoints to identify which permissions
         grant access to multiple resources.
+        ```
 
     .EXAMPLE
+        ```
         Get-GraphPermissions -Path "/groups/{id}/members" -Method GET |
             Format-Table Scheme, Permission, IsLeastPrivileged -GroupBy Scheme
         
         Displays permissions grouped by authentication scheme for better readability.
+        ```
 
     .OUTPUTS
         PSCustomObject

@@ -44,6 +44,7 @@ permission scope required for your application to function.
 
 ### EXAMPLE 1
 
+```
 Find-GraphLeastPrivilege -Path "/me/messages" -Method GET -Scheme DelegatedWork
 
 Returns the least privileged permission needed to read the current user's messages
@@ -53,9 +54,11 @@ Output:
 Path         Method Scheme        Permission
 ----         ------ ------        ----------
 /me/messages GET    DelegatedWork Mail.ReadBasic
+```
 
 ### EXAMPLE 2
 
+```
 Find-GraphLeastPrivilege -Path "/users/{id}/messages" -Method GET
 
 Returns the least privileged permissions for reading a user's messages across all
@@ -67,16 +70,20 @@ Path                 Method Scheme            Permission
 /users/{id}/messages GET    Application       Mail.ReadBasic.All
 /users/{id}/messages GET    DelegatedWork     Mail.ReadBasic
 /users/{id}/messages GET    DelegatedPersonal Mail.ReadBasic
+```
 
 ### EXAMPLE 3
 
+```
 Find-GraphLeastPrivilege -Path "/me/messages"
 
 Returns least privileged permissions for all HTTP methods and schemes available
 for the /me/messages endpoint.
+```
 
 ### EXAMPLE 4
 
+```
 "/me/messages", "/me/calendar/events" | Find-GraphLeastPrivilege -Method GET -Scheme DelegatedWork
 
 Demonstrates pipeline usage to query multiple endpoints at once.
@@ -88,14 +95,17 @@ Path                Method Scheme        Permission
 ----                ------ ------        ----------
 /me/messages        GET    DelegatedWork Mail.ReadBasic
 /me/calendar/events GET    DelegatedWork Calendars.ReadBasic
+```
 
 ### EXAMPLE 5
 
+```
 $paths = @("/users/{id}", "/groups/{id}", "/applications")
 $paths | Find-GraphLeastPrivilege -Method GET -Scheme Application | Select-Object Path, Permission
 
 Queries multiple paths and displays only the path and permission, useful for
 generating permission requirement documentation.
+```
 
 ## PARAMETERS
 

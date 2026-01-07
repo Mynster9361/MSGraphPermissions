@@ -32,6 +32,7 @@
         If not specified, returns least privileged permissions for all available schemes.
 
     .EXAMPLE
+        ```
         Find-GraphLeastPrivilege -Path "/me/messages" -Method GET -Scheme DelegatedWork
         
         Returns the least privileged permission needed to read the current user's messages
@@ -41,8 +42,10 @@
         Path         Method Scheme        Permission
         ----         ------ ------        ----------
         /me/messages GET    DelegatedWork Mail.ReadBasic
+        ```
 
     .EXAMPLE
+        ```
         Find-GraphLeastPrivilege -Path "/users/{id}/messages" -Method GET
         
         Returns the least privileged permissions for reading a user's messages across all
@@ -54,14 +57,18 @@
         /users/{id}/messages GET    Application       Mail.ReadBasic.All
         /users/{id}/messages GET    DelegatedWork     Mail.ReadBasic
         /users/{id}/messages GET    DelegatedPersonal Mail.ReadBasic
+        ```
 
     .EXAMPLE
+        ```
         Find-GraphLeastPrivilege -Path "/me/messages"
         
         Returns least privileged permissions for all HTTP methods and schemes available
         for the /me/messages endpoint.
+        ```
 
     .EXAMPLE
+        ```
         "/me/messages", "/me/calendar/events" | Find-GraphLeastPrivilege -Method GET -Scheme DelegatedWork
         
         Demonstrates pipeline usage to query multiple endpoints at once. Returns the least
@@ -72,13 +79,16 @@
         ----                ------ ------        ----------
         /me/messages        GET    DelegatedWork Mail.ReadBasic
         /me/calendar/events GET    DelegatedWork Calendars.ReadBasic
+        ```
 
     .EXAMPLE
+        ```
         $paths = @("/users/{id}", "/groups/{id}", "/applications")
         $paths | Find-GraphLeastPrivilege -Method GET -Scheme Application | Select-Object Path, Permission
         
         Queries multiple paths and displays only the path and permission, useful for
         generating permission requirement documentation.
+        ```
 
     .OUTPUTS
         PSCustomObject

@@ -122,7 +122,8 @@ Valid values are:
       <command:example>
         <maml:title>--------- EXAMPLE 1 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphLeastPrivilege -Path "/me/messages" -Method GET -Scheme DelegatedWork</maml:para>
+          <maml:para>```
+Find-GraphLeastPrivilege -Path "/me/messages" -Method GET -Scheme DelegatedWork</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Returns the least privileged permission needed to read the current user's messages
 using delegated work/school account permissions.</maml:para>
@@ -130,7 +131,8 @@ using delegated work/school account permissions.</maml:para>
           <maml:para>Output:
 Path         Method Scheme        Permission
 ----         ------ ------        ----------
-/me/messages GET    DelegatedWork Mail.ReadBasic</maml:para>
+/me/messages GET    DelegatedWork Mail.ReadBasic
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -138,7 +140,8 @@ Path         Method Scheme        Permission
       <command:example>
         <maml:title>--------- EXAMPLE 2 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphLeastPrivilege -Path "/users/{id}/messages" -Method GET</maml:para>
+          <maml:para>```
+Find-GraphLeastPrivilege -Path "/users/{id}/messages" -Method GET</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Returns the least privileged permissions for reading a user's messages across all
 authentication schemes.</maml:para>
@@ -148,7 +151,8 @@ Path                 Method Scheme            Permission
 ----                 ------ ------            ----------
 /users/{id}/messages GET    Application       Mail.ReadBasic.All
 /users/{id}/messages GET    DelegatedWork     Mail.ReadBasic
-/users/{id}/messages GET    DelegatedPersonal Mail.ReadBasic</maml:para>
+/users/{id}/messages GET    DelegatedPersonal Mail.ReadBasic
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -156,10 +160,12 @@ Path                 Method Scheme            Permission
       <command:example>
         <maml:title>--------- EXAMPLE 3 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphLeastPrivilege -Path "/me/messages"</maml:para>
+          <maml:para>```
+Find-GraphLeastPrivilege -Path "/me/messages"</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Returns least privileged permissions for all HTTP methods and schemes available
-for the /me/messages endpoint.</maml:para>
+for the /me/messages endpoint.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -167,7 +173,8 @@ for the /me/messages endpoint.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 4 ---------</maml:title>
         <maml:introduction>
-          <maml:para>"/me/messages", "/me/calendar/events" | Find-GraphLeastPrivilege -Method GET -Scheme DelegatedWork</maml:para>
+          <maml:para>```
+"/me/messages", "/me/calendar/events" | Find-GraphLeastPrivilege -Method GET -Scheme DelegatedWork</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Demonstrates pipeline usage to query multiple endpoints at once.
 Returns the least
@@ -177,7 +184,8 @@ privileged delegated work permission for reading messages and calendar events.</
 Path                Method Scheme        Permission
 ----                ------ ------        ----------
 /me/messages        GET    DelegatedWork Mail.ReadBasic
-/me/calendar/events GET    DelegatedWork Calendars.ReadBasic</maml:para>
+/me/calendar/events GET    DelegatedWork Calendars.ReadBasic
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -185,11 +193,13 @@ Path                Method Scheme        Permission
       <command:example>
         <maml:title>--------- EXAMPLE 5 ---------</maml:title>
         <maml:introduction>
-          <maml:para>$paths = @("/users/{id}", "/groups/{id}", "/applications")
+          <maml:para>```
+$paths = @("/users/{id}", "/groups/{id}", "/applications")
 $paths | Find-GraphLeastPrivilege -Method GET -Scheme Application | Select-Object Path, Permission</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Queries multiple paths and displays only the path and permission, useful for
-generating permission requirement documentation.</maml:para>
+generating permission requirement documentation.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -282,7 +292,8 @@ Pattern matching is case-insensitive.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 1 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphPath -Pattern "*messages*"</maml:para>
+          <maml:para>```
+Find-GraphPath -Pattern "*messages*"</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Finds all API paths containing the word "messages" anywhere in the path.</maml:para>
           <maml:para>&#x80;</maml:para>
@@ -292,7 +303,8 @@ Path                                    Methods
 /me/messages                            POST, GET
 /users/{id}/messages                    POST, GET
 /me/mailfolders/{id}/messages           POST, GET
-/chats/{id}/messages                    POST, GET</maml:para>
+/chats/{id}/messages                    POST, GET
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -300,11 +312,13 @@ Path                                    Methods
       <command:example>
         <maml:title>--------- EXAMPLE 2 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphPath -Pattern "/me/*"</maml:para>
+          <maml:para>```
+Find-GraphPath -Pattern "/me/*"</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Finds all API paths directly under the /me endpoint.
 Returns hundreds of paths
-showing all available operations for the current user context.</maml:para>
+showing all available operations for the current user context.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -312,7 +326,8 @@ showing all available operations for the current user context.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 3 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphPath -Pattern "*accessreviews*"</maml:para>
+          <maml:para>```
+Find-GraphPath -Pattern "*accessreviews*"</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Discovers all access review-related endpoints across the API.</maml:para>
           <maml:para>&#x80;</maml:para>
@@ -322,7 +337,8 @@ Path                                                    Methods
 /accessreviews                                          POST, GET
 /accessreviews/{id}                                     DELETE, PATCH, GET
 /identitygovernance/accessreviews/definitions           POST, GET
-/identitygovernance/accessreviews/policy                PATCH, GET</maml:para>
+/identitygovernance/accessreviews/policy                PATCH, GET
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -330,10 +346,12 @@ Path                                                    Methods
       <command:example>
         <maml:title>--------- EXAMPLE 4 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphPath -Pattern "/users/{id}/mail*" | Format-Table -AutoSize</maml:para>
+          <maml:para>```
+Find-GraphPath -Pattern "/users/{id}/mail*" | Format-Table -AutoSize</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Finds all mail-related endpoints for a specific user and formats the output
-as a compact table.</maml:para>
+as a compact table.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -341,10 +359,12 @@ as a compact table.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 5 ---------</maml:title>
         <maml:introduction>
-          <maml:para>$calendarPaths = Find-GraphPath -Pattern "*calendar*"
+          <maml:para>```
+$calendarPaths = Find-GraphPath -Pattern "*calendar*"
 $calendarPaths | Select-Object -First 10</maml:para>
           <maml:para>&#x80;</maml:para>
-          <maml:para>Finds all calendar-related paths and displays the first 10 results.</maml:para>
+          <maml:para>Finds all calendar-related paths and displays the first 10 results.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -352,10 +372,12 @@ $calendarPaths | Select-Object -First 10</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 6 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Find-GraphPath -Pattern "/identitygovernance/lifecycleworkflows/workflows*" |
+          <maml:para>```
+Find-GraphPath -Pattern "/identitygovernance/lifecycleworkflows/workflows*" |
     Measure-Object | Select-Object -ExpandProperty Count</maml:para>
           <maml:para>&#x80;</maml:para>
-          <maml:para>Counts how many workflow-related endpoints exist under lifecycle workflows.</maml:para>
+          <maml:para>Counts how many workflow-related endpoints exist under lifecycle workflows.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -494,7 +516,8 @@ Valid values are:
       <command:example>
         <maml:title>--------- EXAMPLE 1 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Get-GraphPermissions -Path "/users/{id}" -Method GET</maml:para>
+          <maml:para>```
+Get-GraphPermissions -Path "/users/{id}" -Method GET</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Returns all permissions (least privileged and higher) that can be used to read
 a user object, across all authentication schemes.</maml:para>
@@ -504,7 +527,8 @@ Path        Method Scheme      Permission           IsLeastPrivileged
 ----        ------ ------      ----------           -----------------
 /users/{id} GET    Application User.Read.All        False
 /users/{id} GET    Application User.ReadBasic.All   True
-/users/{id} GET    Application Directory.Read.All   False</maml:para>
+/users/{id} GET    Application Directory.Read.All   False
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -512,7 +536,8 @@ Path        Method Scheme      Permission           IsLeastPrivileged
       <command:example>
         <maml:title>--------- EXAMPLE 2 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Get-GraphPermissions -Path "/me/messages" -Method GET -Scheme DelegatedWork</maml:para>
+          <maml:para>```
+Get-GraphPermissions -Path "/me/messages" -Method GET -Scheme DelegatedWork</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Returns all delegated work permissions that can read the current user's messages,
 showing both least privileged and broader permissions.</maml:para>
@@ -522,7 +547,8 @@ Path         Method Scheme        Permission      IsLeastPrivileged
 ----         ------ ------        ----------      -----------------
 /me/messages GET    DelegatedWork Mail.ReadBasic  True
 /me/messages GET    DelegatedWork Mail.Read       False
-/me/messages GET    DelegatedWork Mail.ReadWrite  False</maml:para>
+/me/messages GET    DelegatedWork Mail.ReadWrite  False
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -530,12 +556,14 @@ Path         Method Scheme        Permission      IsLeastPrivileged
       <command:example>
         <maml:title>--------- EXAMPLE 3 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Get-GraphPermissions -Path "/users/{id}/messages" -Method GET |
+          <maml:para>```
+Get-GraphPermissions -Path "/users/{id}/messages" -Method GET |
     Where-Object { $_.IsLeastPrivileged } |
     Format-Table Permission, Scheme</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Gets all permissions for reading user messages, then filters to show only
-the least privileged options across all schemes.</maml:para>
+the least privileged options across all schemes.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -543,11 +571,13 @@ the least privileged options across all schemes.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 4 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Get-GraphPermissions -Path "/me/calendar/events" -Method POST -Scheme Application |
+          <maml:para>```
+Get-GraphPermissions -Path "/me/calendar/events" -Method POST -Scheme Application |
     Select-Object Permission, IsLeastPrivileged, AlsoRequires</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Shows all application permissions that can create calendar events, including
-any additional permissions required (AlsoRequires column).</maml:para>
+any additional permissions required (AlsoRequires column).
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -555,11 +585,13 @@ any additional permissions required (AlsoRequires column).</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 5 ---------</maml:title>
         <maml:introduction>
-          <maml:para>"/me/messages", "/me/calendar" | Get-GraphPermissions -Method GET |
+          <maml:para>```
+"/me/messages", "/me/calendar" | Get-GraphPermissions -Method GET |
     Group-Object Permission | Sort-Object Count -Descending</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Compares permissions across multiple endpoints to identify which permissions
-grant access to multiple resources.</maml:para>
+grant access to multiple resources.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -567,10 +599,12 @@ grant access to multiple resources.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 6 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Get-GraphPermissions -Path "/groups/{id}/members" -Method GET |
+          <maml:para>```
+Get-GraphPermissions -Path "/groups/{id}/members" -Method GET |
     Format-Table Scheme, Permission, IsLeastPrivileged -GroupBy Scheme</maml:para>
           <maml:para>&#x80;</maml:para>
-          <maml:para>Displays permissions grouped by authentication scheme for better readability.</maml:para>
+          <maml:para>Displays permissions grouped by authentication scheme for better readability.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -655,11 +689,13 @@ from Microsoft Graph.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 1 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Initialize-GraphPermissions</maml:para>
+          <maml:para>```
+Initialize-GraphPermissions</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Downloads permissions data if not already cached.
 If data is already in memory,
-does nothing and returns immediately.</maml:para>
+does nothing and returns immediately.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -667,10 +703,12 @@ does nothing and returns immediately.</maml:para>
       <command:example>
         <maml:title>--------- EXAMPLE 2 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Initialize-GraphPermissions -Force</maml:para>
+          <maml:para>```
+Initialize-GraphPermissions -Force</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Forces a fresh download of the latest permissions data, replacing any existing cache.
-Use this when you need to ensure you have the most recent permissions metadata.</maml:para>
+Use this when you need to ensure you have the most recent permissions metadata.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
@@ -678,10 +716,12 @@ Use this when you need to ensure you have the most recent permissions metadata.<
       <command:example>
         <maml:title>--------- EXAMPLE 3 ---------</maml:title>
         <maml:introduction>
-          <maml:para>Initialize-GraphPermissions -Force -Verbose</maml:para>
+          <maml:para>```
+Initialize-GraphPermissions -Force -Verbose</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Forces a refresh and shows detailed progress information about the download
-and indexing process.</maml:para>
+and indexing process.
+```</maml:para>
         </maml:introduction>
         <dev:code />
         <dev:remarks />
