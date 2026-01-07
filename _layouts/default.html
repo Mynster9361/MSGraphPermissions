@@ -779,6 +779,50 @@
             padding: 0;
         }
 
+        .param-card .highlighter-rouge {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0;
+            margin: 1rem 0;
+            box-shadow: inset 0 2px 4px var(--shadow);
+            position: relative;
+        }
+
+        .param-card .highlighter-rouge::before {
+            content: 'Parameter Details';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--neon-purple);
+            color: white;
+            padding: 0.2rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(192, 132, 252, 0.4);
+            z-index: 1;
+        }
+
+        .param-card .highlight {
+            background: transparent;
+            margin: 0;
+        }
+
+        .param-card .highlight pre {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+            padding: 1rem 1.25rem;
+        }
+
+        .param-card .highlight pre::before {
+            display: none;
+        }
+
         .param-badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
