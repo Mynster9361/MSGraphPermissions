@@ -147,10 +147,27 @@
                 }
                 elseif ($allClaims.Count -gt 2) {
                     # Multiple permissions exist with no explicit least privilege marking
+                    # First, filter out ReadWrite permissions when corresponding Read permissions exist
+                    $permissions = $allClaims | Select-Object -ExpandProperty Permission
+                    $readPermissions = $permissions | Where-Object { $_ -match '^(.+)\.Read\.All$' }
+                    $filteredClaims = $allClaims | Where-Object {
+                        $perm = $_.Permission
+                        # Keep if it's not a ReadWrite permission, or if it is but no Read equivalent exists
+                        if ($perm -match '^(.+)\.ReadWrite\.All$') {
+                            $prefix = $Matches[1]
+                            $readEquivalent = "$prefix.Read.All"
+                            # Exclude if Read version exists
+                            return $readEquivalent -notin $readPermissions
+                        }
+                        return $true
+                    }
+                    
+                    Write-Verbose "Filtered from $($allClaims.Count) to $($filteredClaims.Count) permissions after removing ReadWrite variants"
+                    
                     # Select the permission(s) with the fewest paths (least scope)
                     $permissionPathCounts = @{}
                     
-                    foreach ($claim in $allClaims) {
+                    foreach ($claim in $filteredClaims) {
                         $permName = $claim.Permission
                         if (-not $permissionPathCounts.ContainsKey($permName)) {
                             # Count paths for this permission across the entire permissions data
@@ -162,11 +179,13 @@
                                 }
                             }
                             $permissionPathCounts[$permName] = $pathCount
+                            Write-Verbose "$permName has $pathCount total paths"
                         }
                     }
                     
                     # Find minimum path count
                     $minPathCount = ($permissionPathCounts.Values | Measure-Object -Minimum).Minimum
+                    Write-Verbose "Minimum path count is $minPathCount"
                     
                     # Select all permissions with the minimum path count
                     $leastBroadPermissions = $permissionPathCounts.GetEnumerator() |
@@ -174,7 +193,7 @@
                     Select-Object -ExpandProperty Key
 
                     # Filter claims to only include those with minimum path count
-                    $claims = $allClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
+                    $claims = $filteredClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
                 }
             }
             

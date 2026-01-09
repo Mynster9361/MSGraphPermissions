@@ -79,6 +79,7 @@
     try {
         $response = Invoke-WebRequest -Uri $permissionsUrl -ErrorAction Stop
         $jsonData = $response.Content | ConvertFrom-Json -AsHashtable
+        $script:PermissionsData = $jsonData
         $script:PermissionsCache = Build-PermissionsIndex $jsonData
         Write-Verbose "Successfully loaded permissions data with $($script:PermissionsCache.Count) paths"
     }
