@@ -68,21 +68,31 @@ if (Test-Path $moduleDocsPath) {
     $existingDocs = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" -ErrorAction SilentlyContinue
 }
 
-if ($UpdateMarkdown -and $existingDocs -and $existingDocs.Count -gt 0) {
+$shouldUpdate = $UpdateMarkdown -and $existingDocs -and $existingDocs.Count -gt 0
+if ($shouldUpdate) {
     "`nUpdating Markdown documentation..."
+    "Found $($existingDocs.Count) existing markdown files"
     
-    # Update existing markdown files
-    Update-MarkdownCommandHelp -Path $moduleDocsPath
-    
-    # Update module page
-    $moduleMdPath = Join-Path $moduleDocsPath "$ModuleName.md"
-    if (Test-Path $moduleMdPath) {
-        Update-MarkdownModuleFile -Path $moduleMdPath
+    try {
+        # Update existing markdown files
+        Update-MarkdownCommandHelp -Path $moduleDocsPath -ErrorAction Stop
+        
+        # Update module page
+        $moduleMdPath = Join-Path $moduleDocsPath "$ModuleName.md"
+        if (Test-Path $moduleMdPath) {
+            Update-MarkdownModuleFile -Path $moduleMdPath
+        }
+        
+        "Markdown documentation updated successfully!"
     }
-    
-    "Markdown documentation updated successfully!"
+    catch {
+        Write-Warning "Failed to update markdown: $_"
+        Write-Warning "Falling back to regenerating documentation..."
+        $shouldUpdate = $false
+    }
 }
-else {
+
+if (-not $shouldUpdate) {
     "`nGenerating new Markdown documentation..."
     
     # Ensure the module docs directory exists
