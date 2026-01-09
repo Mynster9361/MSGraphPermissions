@@ -68,7 +68,7 @@ if (Test-Path $moduleDocsPath) {
     $existingDocs = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" -ErrorAction SilentlyContinue
 }
 
-if ($UpdateMarkdown -and $existingDocs) {
+if ($UpdateMarkdown -and $existingDocs -and $existingDocs.Count -gt 0) {
     "`nUpdating Markdown documentation..."
     
     # Update existing markdown files
