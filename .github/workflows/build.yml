@@ -4,6 +4,9 @@
       - master
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
 
