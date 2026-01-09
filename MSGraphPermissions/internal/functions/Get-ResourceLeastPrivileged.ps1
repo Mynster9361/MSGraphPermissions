@@ -43,7 +43,7 @@
     .NOTES
         This is an internal function not exported from the module. It is called by
         Find-GraphLeastPrivilege to extract the minimal permissions from cached data.
-        
+
         The implicit least privilege fallback (single permission treated as least privileged)
         handles cases where Microsoft's metadata doesn't explicitly mark a permission as
         "least" but it's the only option available.
@@ -58,9 +58,9 @@
         [string]$Method,
         [string]$Scheme
     )
-    
+
     $result = @{}
-    
+
     if ($Method -and $Resource.Methods.ContainsKey($Method)) {
         $methodData = @{ $Method = $Resource.Methods[$Method] }
     }
@@ -84,7 +84,7 @@
 
         foreach ($s in $schemes.Keys) {
             $claims = $schemes[$s] | Where-Object { $_.Least }
-            
+
             # If no explicit least privileged permissions, check if there's only one permission total
             if (-not $claims) {
                 $allClaims = $schemes[$s]
@@ -97,7 +97,7 @@
                     $permissions = $allClaims | Select-Object -ExpandProperty Permission
                     $readPerm = $permissions | Where-Object { $_ -match '^(.+)\.Read\.All$' }
                     $readWritePerm = $permissions | Where-Object { $_ -match '^(.+)\.ReadWrite\.All$' }
-                    
+
                     if ($readPerm -and $readWritePerm) {
                         # Extract prefix before .Read.All and .ReadWrite.All
                         $readPerm -match '^(.+)\.Read\.All$' | Out-Null
@@ -105,13 +105,13 @@
                         
                         $readWritePerm -match '^(.+)\.ReadWrite\.All$' | Out-Null
                         $readWritePrefix = $Matches[1]
-                        
+
                         # If prefixes match, the Read permission is less privileged
                         if ($readPrefix -eq $readWritePrefix) {
                             $claims = $allClaims | Where-Object { $_.Permission -eq $readPerm }
                         }
                     }
-                    
+
                     # If pattern didn't match, fall through to path count logic below
                     if (-not $claims) {
                         # Multiple permissions exist with no explicit least privilege marking
@@ -137,10 +137,10 @@
                         $minPathCount = ($permissionPathCounts.Values | Measure-Object -Minimum).Minimum
                         
                         # Select all permissions with the minimum path count
-                        $leastBroadPermissions = $permissionPathCounts.GetEnumerator() | 
-                            Where-Object { $_.Value -eq $minPathCount } | 
-                            Select-Object -ExpandProperty Key
-                        
+                        $leastBroadPermissions = $permissionPathCounts.GetEnumerator() |
+                        Where-Object { $_.Value -eq $minPathCount } |
+                        Select-Object -ExpandProperty Key
+
                         # Filter claims to only include those with minimum path count
                         $claims = $allClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
                     }
@@ -169,10 +169,10 @@
                     $minPathCount = ($permissionPathCounts.Values | Measure-Object -Minimum).Minimum
                     
                     # Select all permissions with the minimum path count
-                    $leastBroadPermissions = $permissionPathCounts.GetEnumerator() | 
-                        Where-Object { $_.Value -eq $minPathCount } | 
-                        Select-Object -ExpandProperty Key
-                    
+                    $leastBroadPermissions = $permissionPathCounts.GetEnumerator() |
+                    Where-Object { $_.Value -eq $minPathCount } |
+                    Select-Object -ExpandProperty Key
+
                     # Filter claims to only include those with minimum path count
                     $claims = $allClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
                 }
