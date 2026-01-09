@@ -61,7 +61,13 @@ Import-Module $ModulePath -Force
 
 # Generate or update Markdown documentation
 $moduleDocsPath = Join-Path $DocsPath $ModuleName
-$existingDocs = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" -ErrorAction SilentlyContinue
+
+# Check if module docs folder exists and has markdown files
+$existingDocs = $null
+if (Test-Path $moduleDocsPath) {
+    $existingDocs = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" -ErrorAction SilentlyContinue
+}
+
 if ($UpdateMarkdown -and $existingDocs) {
     "`nUpdating Markdown documentation..."
     
@@ -69,7 +75,7 @@ if ($UpdateMarkdown -and $existingDocs) {
     Update-MarkdownCommandHelp -Path $moduleDocsPath
     
     # Update module page
-    $moduleMdPath = Join-Path $DocsPath "$ModuleName.md"
+    $moduleMdPath = Join-Path $moduleDocsPath "$ModuleName.md"
     if (Test-Path $moduleMdPath) {
         Update-MarkdownModuleFile -Path $moduleMdPath
     }
@@ -79,9 +85,15 @@ if ($UpdateMarkdown -and $existingDocs) {
 else {
     "`nGenerating new Markdown documentation..."
     
+    # Ensure the module docs directory exists
+    if (-not (Test-Path $moduleDocsPath)) {
+        New-Item -Path $moduleDocsPath -ItemType Directory -Force | Out-Null
+        "Created module docs directory: $moduleDocsPath"
+    }
+    
     # Generate markdown for all exported commands
     $commands = Get-Command -Module $ModuleName
-    New-MarkdownCommandHelp -CommandInfo $commands -OutputFolder $DocsPath -Force -WithModulePage
+    New-MarkdownCommandHelp -CommandInfo $commands -OutputFolder $moduleDocsPath -Force -WithModulePage
     
     "Markdown documentation generated successfully!"
 }
