@@ -60,12 +60,13 @@ if (-not (Test-Path $ExternalHelpPath)) {
 Import-Module $ModulePath -Force
 
 # Generate or update Markdown documentation
-$existingDocs = Get-ChildItem -Path $DocsPath -Filter "*.md" -ErrorAction SilentlyContinue
+$moduleDocsPath = Join-Path $DocsPath $ModuleName
+$existingDocs = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" -ErrorAction SilentlyContinue
 if ($UpdateMarkdown -and $existingDocs) {
     "`nUpdating Markdown documentation..."
     
     # Update existing markdown files
-    Update-MarkdownCommandHelp -Path $DocsPath
+    Update-MarkdownCommandHelp -Path $moduleDocsPath
     
     # Update module page
     $moduleMdPath = Join-Path $DocsPath "$ModuleName.md"
@@ -87,7 +88,6 @@ else {
 
 # Compile Markdown to MAML (external help XML)
 "`nCompiling Markdown to MAML help files..."
-$moduleDocsPath = Join-Path $DocsPath $ModuleName
 
 if (Test-Path $moduleDocsPath) {
     $markdownFiles = Get-ChildItem -Path $moduleDocsPath -Filter "*.md" | Where-Object Name -ne "MSGraphPermissions.md"
