@@ -92,6 +92,90 @@
                     # Only one permission exists, treat it as implicitly least privileged
                     $claims = $allClaims
                 }
+                elseif ($allClaims.Count -eq 2) {
+                    # Exactly 2 permissions - check if they follow X.Read.All and X.ReadWrite.All pattern
+                    $permissions = $allClaims | Select-Object -ExpandProperty Permission
+                    $readPerm = $permissions | Where-Object { $_ -match '^(.+)\.Read\.All$' }
+                    $readWritePerm = $permissions | Where-Object { $_ -match '^(.+)\.ReadWrite\.All$' }
+                    
+                    if ($readPerm -and $readWritePerm) {
+                        # Extract prefix before .Read.All and .ReadWrite.All
+                        $readPerm -match '^(.+)\.Read\.All$' | Out-Null
+                        $readPrefix = $Matches[1]
+                        
+                        $readWritePerm -match '^(.+)\.ReadWrite\.All$' | Out-Null
+                        $readWritePrefix = $Matches[1]
+                        
+                        # If prefixes match, the Read permission is less privileged
+                        if ($readPrefix -eq $readWritePrefix) {
+                            $claims = $allClaims | Where-Object { $_.Permission -eq $readPerm }
+                        }
+                    }
+                    
+                    # If pattern didn't match, fall through to path count logic below
+                    if (-not $claims) {
+                        # Multiple permissions exist with no explicit least privilege marking
+                        # Select the permission(s) with the fewest paths (least scope)
+                        $permissionPathCounts = @{}
+                        
+                        foreach ($claim in $allClaims) {
+                            $permName = $claim.Permission
+                            if (-not $permissionPathCounts.ContainsKey($permName)) {
+                                # Count paths for this permission across the entire permissions data
+                                $pathCount = 0
+                                if ($script:PermissionsData -and $script:PermissionsData.permissions.ContainsKey($permName)) {
+                                    $permData = $script:PermissionsData.permissions[$permName]
+                                    foreach ($pathSet in $permData.pathSets) {
+                                        $pathCount += $pathSet.paths.Count
+                                    }
+                                }
+                                $permissionPathCounts[$permName] = $pathCount
+                            }
+                        }
+                        
+                        # Find minimum path count
+                        $minPathCount = ($permissionPathCounts.Values | Measure-Object -Minimum).Minimum
+                        
+                        # Select all permissions with the minimum path count
+                        $leastBroadPermissions = $permissionPathCounts.GetEnumerator() | 
+                            Where-Object { $_.Value -eq $minPathCount } | 
+                            Select-Object -ExpandProperty Key
+                        
+                        # Filter claims to only include those with minimum path count
+                        $claims = $allClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
+                    }
+                }
+                elseif ($allClaims.Count -gt 2) {
+                    # Multiple permissions exist with no explicit least privilege marking
+                    # Select the permission(s) with the fewest paths (least scope)
+                    $permissionPathCounts = @{}
+                    
+                    foreach ($claim in $allClaims) {
+                        $permName = $claim.Permission
+                        if (-not $permissionPathCounts.ContainsKey($permName)) {
+                            # Count paths for this permission across the entire permissions data
+                            $pathCount = 0
+                            if ($script:PermissionsData -and $script:PermissionsData.permissions.ContainsKey($permName)) {
+                                $permData = $script:PermissionsData.permissions[$permName]
+                                foreach ($pathSet in $permData.pathSets) {
+                                    $pathCount += $pathSet.paths.Count
+                                }
+                            }
+                            $permissionPathCounts[$permName] = $pathCount
+                        }
+                    }
+                    
+                    # Find minimum path count
+                    $minPathCount = ($permissionPathCounts.Values | Measure-Object -Minimum).Minimum
+                    
+                    # Select all permissions with the minimum path count
+                    $leastBroadPermissions = $permissionPathCounts.GetEnumerator() | 
+                        Where-Object { $_.Value -eq $minPathCount } | 
+                        Select-Object -ExpandProperty Key
+                    
+                    # Filter claims to only include those with minimum path count
+                    $claims = $allClaims | Where-Object { $_.Permission -in $leastBroadPermissions }
+                }
             }
             
             if ($claims) {
