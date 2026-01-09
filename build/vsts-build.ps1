@@ -50,8 +50,11 @@ Get-ChildItem -Path "$($publishDir.FullName)\MSGraphPermissions\functions\" -Rec
 }
 
 # Gather scripts
-Get-ChildItem -Path "$($publishDir.FullName)\MSGraphPermissions\internal\scripts\" -Recurse -File -Filter "*.ps1" | ForEach-Object {
-	$text += [System.IO.File]::ReadAllText($_.FullName)
+$scriptsPath = "$($publishDir.FullName)\MSGraphPermissions\internal\scripts\"
+if (Test-Path $scriptsPath) {
+	Get-ChildItem -Path $scriptsPath -Recurse -File -Filter "*.ps1" | ForEach-Object {
+		$text += [System.IO.File]::ReadAllText($_.FullName)
+	}
 }
 
 #region Update the psm1 file & Cleanup
