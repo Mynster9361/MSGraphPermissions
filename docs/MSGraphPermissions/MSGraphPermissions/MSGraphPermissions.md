@@ -5,7 +5,7 @@ HelpInfoUri: ''
 Locale: en-US
 Module Guid: 542f1a4a-6a21-4ee1-af3f-25a4681e644b
 Module Name: MSGraphPermissions
-ms.date: 01/09/2026
+ms.date: 08/04/2026
 PlatyPS schema version: 2024-05-01
 title: MSGraphPermissions Module
 ---

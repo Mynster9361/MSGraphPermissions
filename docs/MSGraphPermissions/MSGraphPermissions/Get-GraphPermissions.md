@@ -4,7 +4,7 @@ external help file: MSGraphPermissions-Help.xml
 HelpUri: https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Get-GraphPermissions.html
 Locale: en-US
 Module Name: MSGraphPermissions
-ms.date: 01/09/2026
+ms.date: 08/04/2026
 PlatyPS schema version: 2024-05-01
 title: Get-GraphPermissions
 ---
@@ -20,7 +20,7 @@ Retrieves all permissions (including non-least privileged) for a Microsoft Graph
 ### __AllParameterSets
 
 ```
-Get-GraphPermissions [-Path] <string> [[-Method] <string>] [[-Scheme] <string>] [<CommonParameters>]
+Get-GraphPermissions [-Path] <string> [[-Method] <string>] [[-Scheme] <string>]
 ```
 
 ## ALIASES

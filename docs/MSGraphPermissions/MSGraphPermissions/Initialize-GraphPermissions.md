@@ -4,7 +4,7 @@ external help file: MSGraphPermissions-Help.xml
 HelpUri: https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Initialize-GraphPermissions.html
 Locale: en-US
 Module Name: MSGraphPermissions
-ms.date: 01/09/2026
+ms.date: 08/04/2026
 PlatyPS schema version: 2024-05-01
 title: Initialize-GraphPermissions
 ---
@@ -20,7 +20,7 @@ Downloads and initializes the Microsoft Graph permissions cache.
 ### __AllParameterSets
 
 ```
-Initialize-GraphPermissions [-Force] [<CommonParameters>]
+Initialize-GraphPermissions [-Force]
 ```
 
 ## ALIASES

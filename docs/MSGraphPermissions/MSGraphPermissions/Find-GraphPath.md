@@ -4,7 +4,7 @@ external help file: MSGraphPermissions-Help.xml
 HelpUri: https://mynster9361.github.io/MSGraphPermissions/docs/MSGraphPermissions/Find-GraphPath.html
 Locale: en-US
 Module Name: MSGraphPermissions
-ms.date: 01/09/2026
+ms.date: 08/04/2026
 PlatyPS schema version: 2024-05-01
 title: Find-GraphPath
 ---
@@ -20,7 +20,7 @@ Searches for Microsoft Graph API paths matching a wildcard pattern.
 ### __AllParameterSets
 
 ```
-Find-GraphPath [-Pattern] <string> [<CommonParameters>]
+Find-GraphPath [-Pattern] <string>
 ```
 
 ## ALIASES
